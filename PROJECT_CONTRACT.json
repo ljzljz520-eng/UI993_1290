@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "metrics": {
+    "production_loc": 2464,
+    "production_files": 19,
+    "production_packages": 10,
+    "test_files": 9,
+    "production_functions": 73,
+    "decision_points": 64
+  },
+  "persistence": {
+    "module": "go.etcd.io/bbolt",
+    "entities": ["Referee", "Qualification", "TrainingRecord", "AuditEvent"],
+    "reopen_test": "TestPersistenceSurvivesReopen"
+  },
+  "workflows": [
+    {"steps": ["submit referee number and name", "load referee identity", "collect active qualifications and training", "return stable result card"], "test": "TestWorkflowQuery"},
+    {"steps": ["validate administrator input", "save referee or qualification", "disable a qualification", "record audit event"], "test": "TestWorkflowAdmin"},
+    {"steps": ["open embedded database", "write domain entities", "close database", "reopen and read entities"], "test": "TestPersistenceSurvivesReopen"}
+  ]
+}
